@@ -1,0 +1,33 @@
+# Loop through the list of namespaces in values.yaml and create the specified rbac permissions
+# Additionally, read-only permissions will be created for all authenticated users for each namespace.
+
+{{ range $i := .Values.namespaces }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-access
+  namespace: {{ $i.name }}
+subjects:
+- kind: Group
+  name: {{ $i.group | quote }}
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-only
+  namespace: {{ $i.name }}
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+{{ end }}

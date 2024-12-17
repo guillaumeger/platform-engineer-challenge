@@ -1,0 +1,10 @@
+# This role will be aggregated to the "edit" role
+# This is meant to add custom permissions for operators
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: aditionnal-permissisons
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-edit: "true"
+rules:
+{{- toYaml .Values.customRules | nindent 2}}

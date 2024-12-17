@@ -1,0 +1,23 @@
+# For each namespace, specify a group to have r/w access and CPU/memory limits
+# Purpose is informational
+
+namespaces:
+  - name: test
+    purpose: deploy app foo
+    group: devs1
+    limits:
+      cpu: "2"
+      memory: 1Gi
+  - name: test2
+    purpose: deploy app bar
+    group: devs2
+    limits:
+      cpu: "8"
+      memory: 12Gi
+
+# Custom rules to aggregate with the "edit" role      
+
+customRules: # example
+  - apiGroups: [""]
+    resources: ["services", "pods"]
+    verbs: ["get", "list"]

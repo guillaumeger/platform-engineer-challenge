@@ -1,0 +1,14 @@
+## Loop through the list of namespaces in values.yaml and create each one
+
+{{ range $i := .Values.namespaces }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: {{ $i.name }}
+  name: {{ $i.name }}
+spec:
+  finalizers:
+  - kubernetes
+{{ end }}

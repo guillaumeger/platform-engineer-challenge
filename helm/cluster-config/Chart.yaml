@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cluster-config
+description: Helm chart with aditionnal cluster configuration
+
+type: application
+
+version: 0.1.0

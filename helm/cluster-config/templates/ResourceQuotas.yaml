@@ -1,0 +1,14 @@
+# Loop through the list of namespaces in values.yaml and create resource quotas with the defined values
+
+{{ range $i := .Values.namespaces }}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resources
+  namespace: {{ $i.name }}
+spec:
+  hard:
+    limits.cpu: {{ $i.limits.cpu }}
+    limits.memory: {{ $i.limits.memory }}
+{{ end }}
